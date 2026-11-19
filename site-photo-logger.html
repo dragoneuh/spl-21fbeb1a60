@@ -1,0 +1,1312 @@
+<!doctype html>
+<!-- Built with Modern Web Guidance guides: dialog, dark-mode, form-factor-adaptation. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101820" media="(prefers-color-scheme: dark)">
+<title>Site Photo Logger</title>
+<link id="manifest" rel="manifest">
+<link id="favicon" rel="icon">
+<style>
+:root{color-scheme:light dark;--bg:#fff;--panel:#f0f3f5;--text:#101820;--muted:#344452;--line:#617180;--brand:#004477;--onbrand:#fff;--danger:#9b190c;--warning:#fff0ba;--warningtext:#392900;--focus:#ae3200;font-family:system-ui,sans-serif;font-size:100%}
+@media(prefers-color-scheme:dark){:root{--bg:#101820;--panel:#1c2934;--text:#fff;--muted:#d1dce5;--line:#9cabb8;--brand:#a6dcff;--onbrand:#102332;--danger:#ffb5a8;--warning:#423300;--warningtext:#fff2b7;--focus:#ffdc70}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--text);font-size:1.0625rem;line-height:1.5;overflow-wrap:anywhere}
+header{padding:max(1rem,env(safe-area-inset-top,0px)) max(1rem,env(safe-area-inset-right,0px)) 1rem max(1rem,env(safe-area-inset-left,0px));border-bottom:2px solid var(--line)}
+h1{font-size:1.7rem;margin:0 0 .6rem}
+h2{font-size:1.5rem;margin:.2rem 0 1rem}
+h3{font-size:1.2rem;margin:1.2rem 0 .6rem}
+p{margin:.6rem 0 1rem}
+h1,h2,h3{text-wrap:balance}
+p,li{text-wrap:pretty}
+main{max-width:65rem;margin:auto;padding:1rem 1rem calc(10rem + env(safe-area-inset-bottom,0px))}
+section{min-width:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button,select,input:not([type=checkbox],[type=radio]),textarea,.choice,.filelabel,summary{min-block-size:3rem;min-inline-size:3rem}
+button,.filelabel,summary{cursor:pointer}
+button,.filelabel{border:2px solid var(--line);border-radius:.45rem;padding:.65rem .85rem;background:var(--bg);color:var(--text);font-weight:650;white-space:normal}
+button:disabled{opacity:.6;cursor:default}
+.primary,.filelabel{background:var(--brand);color:var(--onbrand);border-color:var(--brand)}
+.danger{color:var(--danger)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,.filelabel:focus-within{outline:3px solid var(--focus);outline-offset:3px}
+label{display:block;font-weight:650;margin:.7rem 0 .25rem}
+input:not([type=checkbox],[type=radio]),select,textarea{display:block;width:100%;padding:.6rem;border:2px solid var(--line);border-radius:.3rem;background:var(--bg)}
+input[type=checkbox],input[type=radio]{width:1.4rem;height:1.4rem;flex:0 0 auto;margin:0}
+textarea{min-height:5rem;resize:vertical}
+.choice{display:flex;align-items:center;gap:.65rem;padding:.55rem .65rem;border:1px solid var(--line);border-radius:.3rem;margin:0;font-weight:500}
+fieldset{margin:1rem 0;padding:.7rem;border:1px solid var(--line);min-width:0}
+legend{font-weight:700;padding:0 .3rem}
+.row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.row>*{min-width:0}
+.row.grow>*{flex:1 1 9rem}
+.stack{display:grid;gap:.7rem}
+small,.muted{color:var(--muted);font-size:1.0625rem}
+.error{color:var(--danger);font-weight:650;margin:.2rem 0 .65rem}
+.error:empty{display:none}
+input:user-invalid,textarea:user-invalid,select:user-invalid{border:3px solid var(--danger)}
+.banner{padding:.85rem;border:2px solid var(--line);border-radius:.4rem;background:var(--panel);margin:.8rem 0}
+.warning{background:var(--warning);color:var(--warningtext)}
+#status{border-left:5px solid var(--brand);padding:.65rem .8rem;background:var(--panel);margin-bottom:1rem;min-block-size:3rem}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:5;display:flex;flex-wrap:wrap;gap:.3rem;padding:.55rem max(.5rem,env(safe-area-inset-right,0px)) max(.55rem,env(safe-area-inset-bottom,0px)) max(.5rem,env(safe-area-inset-left,0px));background:var(--bg);border-top:2px solid var(--line)}
+nav button{flex:1 1 3rem;padding:.7rem .25rem}
+nav button[aria-current=page]{background:var(--brand);color:var(--onbrand);border-color:var(--brand)}
+.jobcard,.card{padding:.85rem;border:1px solid var(--line);border-radius:.5rem;background:var(--panel);margin:.75rem 0;min-width:0}
+.jobpick{width:100%;text-align:left;margin-bottom:.5rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:1rem}
+.card{margin:0;content-visibility:auto;contain-intrinsic-size:auto 28rem}
+.card img{width:100%;max-height:19rem;object-fit:contain}
+.thumb{width:100%;display:block;padding:.25rem}
+.card h3{margin:.5rem 0}
+.card p{margin:.4rem 0}
+.badge{display:inline-block;border:1px solid var(--line);padding:.15rem .45rem;border-radius:.3rem;font-weight:700}
+.filelabel{display:flex;align-items:center;justify-content:center;text-align:center;margin:0}
+.filewrap{position:relative;flex:1 1 10rem}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.filewrap:focus-within .filelabel{outline:3px solid var(--focus);outline-offset:3px}
+details{margin:1rem 0;border:1px solid var(--line);padding:.6rem;border-radius:.3rem}
+summary{font-weight:700;padding:.45rem}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;margin-top:1rem}
+caption{text-align:left;font-weight:700;font-size:1.2rem;padding:.5rem 0}
+th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:.6rem .3rem}
+th{background:var(--panel)}
+td:first-child{min-width:7rem}
+td p{margin:.3rem 0}
+td button{margin-bottom:.4rem}
+dialog{background:var(--bg);color:var(--text);border:2px solid var(--line);border-radius:.5rem;padding:1rem;max-width:40rem;width:calc(100% - 1rem);max-height:calc(100% - 1rem);overflow:auto}
+dialog:modal{overscroll-behavior:contain}
+dialog::backdrop{background:#000b;overflow:hidden;overscroll-behavior:contain}
+dialog .closeform{margin-top:1rem}
+#markupDialog{width:100%;max-width:80rem;max-height:100%;margin:auto;border-radius:0}
+#markupCanvas{display:block;width:100%;height:auto;touch-action:none;border:2px solid var(--line);background:#ddd}
+#viewerImage{display:block;max-width:100%;max-height:70vh;margin:auto;object-fit:contain}
+#markupDialog .tools{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem}
+#markupDialog fieldset:nth-of-type(2) .tools{grid-template-columns:repeat(3,1fr)}
+#markupDialog fieldset{margin:.4rem 0;padding:.35rem .5rem}
+#markupDialog .choice{padding:.25rem .45rem;gap:.4rem}
+#markupDialog p{margin:.25rem 0}
+#markupCanvas{margin:.4rem 0}
+#markupDialog .choice{padding:.2rem .35rem;gap:.3rem;font-size:1rem;word-break:keep-all;overflow-wrap:normal}
+#markupDialog .choice input{margin:0;inline-size:1.1rem;block-size:1.1rem}
+#markupDialog fieldset:nth-of-type(2) .choice{position:relative;justify-content:center}
+#markupDialog fieldset:nth-of-type(2) .choice input{position:absolute;opacity:0;inset:0;inline-size:100%;block-size:100%;margin:0;cursor:pointer}
+#markupDialog fieldset:nth-of-type(2) .choice:has(input:checked){outline:4px solid var(--brand);outline-offset:-2px;font-weight:800}
+#markupDialog fieldset:nth-of-type(2) .choice:has(input:focus-visible){outline:3px solid var(--focus);outline-offset:2px}
+.filewrap{display:flex}.filewrap .filelabel{display:flex;align-items:center;justify-content:center;text-align:center;inline-size:100%;min-block-size:3.75rem}
+.swatch{display:inline-block;width:1.4rem;height:1.4rem;border:2px solid #777;border-radius:.2rem;flex:0 0 auto}
+.tools{display:flex;gap:.4rem;flex-wrap:wrap}
+.tools .choice{flex:1 1 8rem}
+#markupDialog .swatch{inline-size:1.2rem;block-size:1.2rem}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;background:var(--panel);padding:.8rem}
+#jobSummary{flex:1 1 12rem;text-align:left}
+#exportControls button{width:100%}
+.empty{padding:1rem;border:1px dashed var(--line);margin:.6rem 0}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+<h1>Site Photo Logger</h1>
+<div class="row">
+<button type="button" id="jobSummary">Job: create or select a job</button>
+<button type="button" id="settingsOpen" aria-label="Settings">⚙ Settings</button>
+</div>
+</header>
+<main>
+<div id="savingBanner" class="banner warning" hidden>Saving is not available in this browser mode - export before closing</div>
+<div id="backupBanner" class="banner warning" hidden></div>
+<div role="status" aria-live="polite" id="status">Opening your site records…</div>
+
+<section id="jobsSection" aria-labelledby="jobsTitle">
+<h2 id="jobsTitle">Jobs</h2>
+<button type="button" class="primary" id="newJobOpen">New job</button>
+<label class="choice" for="showArchived"><input type="checkbox" id="showArchived">Show archived</label>
+<div id="jobsList"></div>
+<details>
+<summary>Help</summary>
+<ol>
+<li>On Android, open this HTML file from Downloads in Chrome. When hosted over HTTPS, Chrome may also offer “Add to home screen”.</li>
+<li>Create a customer job or a project. Take photos, add labels, and record measurements.</li>
+<li>Download a ZIP regularly, or share it to the OneDrive app. On the PC, extract it into <strong>C:\Users\sales\OneDrive\Desktop\</strong>.</li>
+</ol>
+<p>Customer folders: Proposal / Mr. Smith / Front sign / Site Photos. Project folders: Misc Projects / Lobby mock / Site Photos.</p>
+<p>This page keeps data inside this browser on this phone - export regularly. Exporting backs up the files only after you put them in OneDrive. Keep the ZIP until you have checked the extracted files.</p>
+<p>Delete moves records to _OLD. Nothing is erased. Renaming a customer or job changes the export folder name.</p>
+<p>Original photos may contain camera metadata. Standard copies use JPEG; GPS recording is off until you enable it in Settings.</p>
+</details>
+</section>
+
+<section id="photosSection" aria-labelledby="photosTitle" hidden>
+<h2 id="photosTitle">Photos</h2>
+<p class="needjob" hidden>Select or create a job in Jobs first.</p>
+<div class="jobonly">
+<form id="photoForm">
+<label for="photoQuality">Photo quality</label>
+<select id="photoQuality">
+<option value="standard">Standard (max 2560 px, JPEG 85%)</option>
+<option value="original">Original quality (no resize or recompress)</option>
+</select>
+<div class="row grow" style="margin:1rem 0">
+<div class="filewrap">
+<input class="sr" type="file" id="cameraFile" accept="image/*" capture="environment">
+<label class="filelabel" for="cameraFile">Take photo</label>
+</div>
+<div class="filewrap">
+<input class="sr" type="file" id="galleryFiles" accept="image/*" multiple>
+<label class="filelabel" for="galleryFiles">Attach from gallery</label>
+</div>
+</div>
+</form>
+<div id="photosList" class="grid"></div>
+<details id="oldPhotos">
+<summary>_OLD (superseded)</summary>
+<div id="oldPhotosList" class="stack"></div>
+</details>
+</div>
+</section>
+
+<section id="measureSection" aria-labelledby="measureTitle" hidden>
+<h2 id="measureTitle">Measure</h2>
+<p class="needjob" hidden>Select or create a job in Jobs first.</p>
+<div class="jobonly">
+<div id="editMeasureBanner" class="banner" hidden>
+<p>Editing - saving replaces the old entry (old one moves to _OLD)</p>
+<button type="button" id="cancelMeasureEdit">Cancel edit</button>
+</div>
+<form id="measureForm" novalidate>
+<label for="measureLabel">Label</label>
+<input id="measureLabel" required list="measureLabels" aria-describedby="measureLabelError" autocomplete="off">
+<p id="measureLabelError" class="error"></p>
+<datalist id="measureLabels">
+<option value="width"><option value="height"><option value="depth"><option value="length"><option value="diameter"><option value="letter-height"><option value="sill-height"><option value="setback"><option value="clearance"><option value="overall">
+</datalist>
+<label for="measureValue">Value</label>
+<input id="measureValue" required inputmode="text" autocomplete="off" aria-describedby="measureValueHelp measureValueError">
+<p id="measureValueHelp" class="muted">Feet and inches: 5-6 1/2, 5' 6", or 5 ft 6 in. A lone number means feet.</p>
+<p id="measureValueError" class="error"></p>
+<label for="measureUnit">Unit</label>
+<select id="measureUnit">
+<option value="in">in</option><option value="ft">ft</option><option value="ft-in" selected>ft-in</option><option value="mm">mm</option><option value="cm">cm</option><option value="m">m</option>
+</select>
+<label for="measureNote">Note (optional)</label>
+<textarea id="measureNote"></textarea>
+<label for="measurePhoto">Attach to photo (optional)</label>
+<select id="measurePhoto"><option value="">None</option></select>
+<button type="submit" class="primary" id="measureSave" style="margin-top:1rem">Save measurement</button>
+</form>
+<div class="scroll">
+<table>
+<caption>Measurements — oldest first</caption>
+<thead><tr><th scope="col">Label</th><th scope="col">Value</th><th scope="col">Actions</th></tr></thead>
+<tbody id="measureRows"></tbody>
+</table>
+</div>
+<p id="measureEmpty" class="empty">No measurements yet.</p>
+<details>
+<summary>_OLD (superseded)</summary>
+<div id="oldMeasureList" class="stack"></div>
+</details>
+</div>
+</section>
+
+<section id="exportSection" aria-labelledby="exportTitle" hidden>
+<h2 id="exportTitle">Export</h2>
+<p id="exportSummary"></p>
+<p id="lastExport"></p>
+<form id="exportForm">
+<label for="exportScope">Export scope</label>
+<select id="exportScope">
+<option value="job-all">This job - everything</option>
+<option value="job-new">This job - only new since last export</option>
+<option value="all-all">All jobs - everything</option>
+<option value="all-new">All jobs - only new since last export</option>
+</select>
+<div id="exportControls" class="stack" style="margin-top:1rem">
+<button type="button" id="downloadZip" class="primary">Download ZIP</button>
+<button type="button" id="shareZip" hidden>Share ZIP (to OneDrive app)</button>
+</div>
+<p id="shareReason">Sharing is not available here - use Download ZIP.</p>
+<details>
+<summary>Advanced - share loose files</summary>
+<p>Files are flat, with the customer and job name prefixed. ZIP keeps the intended folder layout. Phone share limits may restrict large batches.</p>
+<button type="button" id="shareLoose" disabled>Share photos + measurement files separately</button>
+</details>
+</form>
+</section>
+</main>
+
+<nav aria-label="Sections">
+<button type="button" data-section="jobs" aria-current="page">Jobs</button>
+<button type="button" data-section="photos">Photos</button>
+<button type="button" data-section="measure">Measure</button>
+<button type="button" data-section="export">Export</button>
+</nav>
+
+<dialog id="jobDialog" aria-labelledby="jobDialogTitle">
+<h2 id="jobDialogTitle">New job</h2>
+<form id="jobForm" novalidate>
+<fieldset>
+<legend>Job kind</legend>
+<div class="row grow">
+<label class="choice" for="kindCustomer"><input type="radio" name="jobKind" id="kindCustomer" value="customer" checked>Customer job</label>
+<label class="choice" for="kindProject"><input type="radio" name="jobKind" id="kindProject" value="project">Project (non-customer)</label>
+</div>
+</fieldset>
+<div id="customerFields">
+<label for="jobCustomer">Customer</label>
+<select id="jobCustomer" aria-describedby="jobCustomerError"></select>
+<p id="jobCustomerError" class="error"></p>
+<div id="newCustomerFields" hidden>
+<fieldset aria-describedby="customerTitleError">
+<legend>Title</legend>
+<div class="row">
+<label class="choice" for="titleMr"><input type="radio" name="customerTitle" id="titleMr" value="Mr.">Mr.</label>
+<label class="choice" for="titleMs"><input type="radio" name="customerTitle" id="titleMs" value="Ms.">Ms.</label>
+</div>
+</fieldset>
+<p id="customerTitleError" class="error"></p>
+<label for="customerLast">Last name</label>
+<input id="customerLast" autocomplete="family-name" aria-describedby="customerLastError">
+<p id="customerLastError" class="error"></p>
+<label for="customerCompany">Company name (optional)</label>
+<input id="customerCompany" autocomplete="organization" aria-describedby="customerDuplicateError">
+<p id="customerDuplicateError" class="error"></p>
+</div>
+</div>
+<label for="jobName" id="jobNameLabel">Job name</label>
+<input id="jobName" required aria-describedby="jobNameError" autofocus>
+<p id="jobNameError" class="error"></p>
+<button type="submit" class="primary">Create job</button>
+</form>
+<form method="dialog" class="closeform"><button type="submit" value="cancel">Cancel</button></form>
+</dialog>
+
+<dialog id="renameDialog" aria-labelledby="renameTitle">
+<h2 id="renameTitle">Edit name</h2>
+<p>Renaming changes the export folder name. Existing exported folders stay where they are.</p>
+<form id="renameForm" novalidate>
+<div id="renameCustomerFields" hidden>
+<fieldset>
+<legend>Title</legend>
+<div class="row">
+<label class="choice" for="renameMr"><input type="radio" name="renamePrefix" id="renameMr" value="Mr." required>Mr.</label>
+<label class="choice" for="renameMs"><input type="radio" name="renamePrefix" id="renameMs" value="Ms." required>Ms.</label>
+</div>
+</fieldset>
+<label for="renameCompany">Company name (optional)</label>
+<input id="renameCompany">
+</div>
+<label for="renameName" id="renameNameLabel">Name</label>
+<input id="renameName" required autofocus aria-describedby="renameError">
+<p id="renameError" class="error"></p>
+<button type="submit" class="primary">Save name</button>
+</form>
+<form method="dialog" class="closeform"><button type="submit" value="cancel">Cancel</button></form>
+</dialog>
+
+<dialog id="labelDialog" aria-labelledby="labelTitle">
+<h2 id="labelTitle">Photo label</h2>
+<form id="labelForm" novalidate>
+<label for="photoLabel">Label</label>
+<input id="photoLabel" required value="photo" list="photoLabels" aria-describedby="photoLabelError" autofocus>
+<datalist id="photoLabels">
+<option value="front"><option value="rear"><option value="left"><option value="right"><option value="wall"><option value="sill"><option value="ceiling"><option value="existing-sign"><option value="mounting"><option value="overall">
+</datalist>
+<p id="photoLabelError" class="error"></p>
+<button type="submit" class="primary">Save label</button>
+</form>
+<form method="dialog" class="closeform"><button type="submit" value="cancel">Cancel</button></form>
+</dialog>
+
+<dialog id="deleteDialog" aria-labelledby="deleteTitle">
+<h2 id="deleteTitle">Move to _OLD?</h2>
+<p id="deleteDescription">This item moves to _OLD and is never erased. You can restore it later.</p>
+<form method="dialog" class="row">
+<button type="submit" value="cancel" autofocus>Cancel</button>
+<button type="submit" value="delete" class="danger">Move to _OLD</button>
+</form>
+</dialog>
+
+<dialog id="viewerDialog" aria-labelledby="viewerTitle">
+<h2 id="viewerTitle">Photo</h2>
+<img id="viewerImage" alt="">
+<form method="dialog" class="closeform"><button type="submit" value="close">Close</button></form>
+</dialog>
+
+<dialog id="settingsDialog" aria-labelledby="settingsTitle">
+<h2 id="settingsTitle">Settings</h2>
+<form id="settingsForm">
+<label for="settingsQuality">Default photo quality</label>
+<select id="settingsQuality"><option value="standard">Standard (max 2560 px, JPEG 85%)</option><option value="original">Original quality (no resize or recompress)</option></select>
+<label class="choice" for="settingsGps"><input type="checkbox" id="settingsGps">Record GPS location with photos and measurements (asks the phone for permission)</label>
+<label for="settingsUnit">Default unit</label>
+<select id="settingsUnit"><option value="in">in</option><option value="ft">ft</option><option value="ft-in">ft-in</option><option value="mm">mm</option><option value="cm">cm</option><option value="m">m</option></select>
+<button type="submit" class="primary" style="margin-top:1rem">Save settings</button>
+</form>
+<h3>Browser storage</h3>
+<p id="storageInfo">Checking storage…</p>
+<button type="button" id="requestPersist">Request persistent storage</button>
+<p>Site Photo Logger v1</p>
+<form method="dialog" class="closeform"><button type="submit" value="close">Close</button></form>
+</dialog>
+
+<dialog id="markupDialog" aria-labelledby="markupTitle">
+<h2 id="markupTitle">Markup photo</h2>
+<p id="markupInfo">Draw on the photo; the original is kept.</p>
+<canvas id="markupCanvas" aria-label="Photo markup drawing area. Choose a tool, then draw or tap for text."></canvas>
+<form id="markupControls">
+<fieldset>
+<legend>Tool</legend>
+<div class="tools">
+<label class="choice" for="toolFree"><input type="radio" name="tool" id="toolFree" value="freehand" checked>Freehand</label>
+<label class="choice" for="toolLine"><input type="radio" name="tool" id="toolLine" value="line">Line</label>
+<label class="choice" for="toolArrow"><input type="radio" name="tool" id="toolArrow" value="arrow">Arrow</label>
+<label class="choice" for="toolText"><input type="radio" name="tool" id="toolText" value="text">Text</label>
+</div>
+</fieldset>
+<fieldset>
+<legend>Color</legend>
+<div class="tools">
+<label class="choice" for="colorRed"><input type="radio" name="ink" id="colorRed" value="#ff2020" checked><span class="swatch" style="background:#ff2020" aria-hidden="true"></span>Red</label>
+<label class="choice" for="colorYellow"><input type="radio" name="ink" id="colorYellow" value="#ffff00"><span class="swatch" style="background:#ffff00" aria-hidden="true"></span>Yellow</label>
+<label class="choice" for="colorWhite"><input type="radio" name="ink" id="colorWhite" value="#ffffff"><span class="swatch" style="background:#fff" aria-hidden="true"></span>White</label>
+<label class="choice" for="colorBlack"><input type="radio" name="ink" id="colorBlack" value="#000000"><span class="swatch" style="background:#000" aria-hidden="true"></span>Black</label>
+<label class="choice" for="colorBlue"><input type="radio" name="ink" id="colorBlue" value="#0066ff"><span class="swatch" style="background:#0066ff" aria-hidden="true"></span>Blue</label>
+<label class="choice" for="colorGreen"><input type="radio" name="ink" id="colorGreen" value="#00bb30"><span class="swatch" style="background:#00bb30" aria-hidden="true"></span>Green</label>
+</div>
+</fieldset>
+<label for="strokeWidth">Stroke width</label>
+<select id="strokeWidth"><option value="0.0025">Thin</option><option value="0.005" selected>Medium</option><option value="0.01">Thick</option></select>
+<div class="row" style="margin:.75rem 0">
+<button type="button" id="markupUndo">Undo</button>
+<button type="button" id="markupClear">Clear</button>
+<button type="button" id="markupSave" class="primary">Save markup</button>
+</div>
+</form>
+<form method="dialog" class="closeform"><button type="submit" value="cancel">Cancel</button></form>
+</dialog>
+
+<dialog id="textDialog" aria-labelledby="textTitle">
+<h2 id="textTitle">Add markup text</h2>
+<form id="textForm" novalidate>
+<label for="markupText">Text</label>
+<input id="markupText" required maxlength="300" autofocus aria-describedby="markupTextError">
+<p id="markupTextError" class="error"></p>
+<button type="submit" class="primary">Add text</button>
+</form>
+<form method="dialog" class="closeform"><button type="submit" value="cancel">Cancel</button></form>
+</dialog>
+
+<dialog id="exportDialog" aria-labelledby="exportResultTitle">
+<h2 id="exportResultTitle">Export result</h2>
+<p id="exportResultMessage"></p>
+<p id="exportResultName"></p>
+<p id="exportResultCounts"></p>
+<pre id="exportTree" aria-label="Export folder tree"></pre>
+<ol>
+<li>Open the ZIP from Downloads or share it to the OneDrive app (any OneDrive folder, e.g. Desktop/Site Inbox).</li>
+<li>On the PC, right-click the ZIP &gt; Extract All... and choose <strong>C:\Users\sales\OneDrive\Desktop\</strong> so it merges into the job folder.</li>
+</ol>
+<p>Nothing is overwritten: files carry timestamps. If Windows asks about an existing file from a previous export, choose “Keep both” or “Skip”; do not replace it.</p>
+<form method="dialog" class="closeform"><button type="submit" value="close">Close</button></form>
+</dialog>
+
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const all=selector=>Array.from(document.querySelectorAll(selector));
+const pause=()=>new Promise(resolve=>setTimeout(resolve,0));
+const uid=()=>globalThis.crypto&&typeof crypto.randomUUID==='function'?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)+'-'+Math.random().toString(36).slice(2);
+const pad2=n=>String(n).padStart(2,'0');
+const stamp=(time,seconds=false)=>{const d=new Date(time);return d.getFullYear()+pad2(d.getMonth()+1)+pad2(d.getDate())+'-'+pad2(d.getHours())+pad2(d.getMinutes())+(seconds?pad2(d.getSeconds()):'')};
+const localISO=time=>{const d=new Date(time),offset=-d.getTimezoneOffset();return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate())+'T'+pad2(d.getHours())+':'+pad2(d.getMinutes())+':'+pad2(d.getSeconds())+(offset>=0?'+':'-')+pad2(Math.floor(Math.abs(offset)/60))+':'+pad2(Math.abs(offset)%60)};
+const localDate=time=>new Date(time).toLocaleString();
+const bytes=n=>n>=1073741824?(n/1073741824).toFixed(2)+' GB':n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
+const safeName=(value,fallback='Unnamed')=>{let s=String(value||'').replace(/[\\/:*?"<>|\u0000-\u001f\u007f]/g,'-').replace(/\s+/g,' ').trim().replace(/[ .]+$/g,'').slice(0,80).replace(/[ .]+$/g,'');if(/^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(s))s='_'+s;return s||fallback};
+const slug=value=>safeName(value,'photo').replace(/ /g,'-').replace(/-{2,}/g,'-').replace(/^-+/,'').slice(0,40).replace(/[-. ]+$/g,'')||'photo';
+const normalizeLast=value=>String(value).trim().replace(/^(?:Mr|Ms)\.?(?:\s+|$)/i,'').trim().replace(/(^|[\s'-])(\p{L})/gu,(_,sep,c)=>sep+c.toUpperCase());
+const displayCustomer=c=>c?c.prefix+' '+c.lastName:'Unknown customer';
+const compareTime=(a,b)=>(a.takenAt??a.createdAt)-(b.takenAt??b.createdAt)||a.id.localeCompare(b.id);
+const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e};
+const message=text=>{$('status').textContent=text};
+function fieldError(id,text){$(id).textContent=text;const input=all('[aria-describedby]').find(e=>e.getAttribute('aria-describedby').split(' ').includes(id));if(input){if(text)input.setAttribute('aria-invalid','true');else input.removeAttribute('aria-invalid')}}
+function clearErrors(ids){ids.forEach(id=>fieldError(id,''))}
+function action(element,type,fn){element.addEventListener(type,event=>{Promise.resolve().then(()=>fn(event)).catch(err=>{console.error(err);message('Could not finish: '+(err.message||String(err))+'. Your existing records have been kept.')})})}
+function button(text,fn,cls){const b=node('button',text,cls);b.type='button';action(b,'click',fn);return b}
+function openDialog(id){const d=$(id);d.returnValue='';d.showModal()}
+all('dialog').forEach(d=>d.addEventListener('close',()=>{d.returnValue=''}));
+
+const storeNames=['meta','customers','jobs','photos','measurements'];
+const state={meta:[],customers:[],jobs:[],photos:[],measurements:[]};
+let db=null,memory=false,currentId=null,currentSection='jobs',editingMeasure=null,labelPhotoId=null,renameTarget=null;
+let processing=false,exportBusy=false,measureBusy=false,markupBusy=false;
+const defaultSettings={quality:'standard',gps:false,defaultUnit:'ft-in'};
+const getMeta=(id,fallback)=>state.meta.find(x=>x.id===id)?.value??fallback;
+const settings=()=>({...defaultSettings,...getMeta('settings',{})});
+const currentJob=()=>state.jobs.find(j=>j.id===currentId)||null;
+const customerFor=j=>j?.kind==='customer'?state.customers.find(c=>c.id===j.customerId):null;
+const jobDisplay=j=>!j?'Job: create or select a job':j.kind==='project'?'Project: '+j.name:displayCustomer(customerFor(j))+' > '+j.name;
+function memoryBanner(){memory=true;$('savingBanner').hidden=false}
+function transactionDone(tx){return new Promise((resolve,reject)=>{tx.oncomplete=()=>resolve();tx.onabort=()=>reject(tx.error||new Error('Storage transaction was cancelled'));tx.onerror=()=>{}})}
+function requestResult(request){return new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error)})}
+async function readStore(name){const tx=db.transaction(name,'readonly'),done=transactionDone(tx);const [records]=await Promise.all([requestResult(tx.objectStore(name).getAll()),done]);return records}
+async function write(changes){
+ if(!changes.length)return;
+ if(db&&!memory){
+  const names=[...new Set(changes.map(x=>x.store))],tx=db.transaction(names,'readwrite'),done=transactionDone(tx);
+  try{for(const change of changes)tx.objectStore(change.store).put(change.value)}catch(e){try{tx.abort()}catch(_){}await done.catch(()=>{});throw e}
+  await done;
+ }
+ for(const {store,value} of changes){const i=state[store].findIndex(x=>x.id===value.id);if(i<0)state[store].push(value);else state[store][i]=value}
+}
+const change=(store,value)=>({store,value});
+const metaChange=(id,value)=>change('meta',{id,value});
+async function initStorage(){
+ try{
+  if(!globalThis.indexedDB)throw new Error('IndexedDB unavailable');
+  db=await new Promise((resolve,reject)=>{
+   const r=indexedDB.open('site-photo-logger',1);
+   let expired=false;
+   const timer=setTimeout(()=>{expired=true;reject(new Error('Storage did not open'))},6000);
+   r.onupgradeneeded=()=>{for(const name of storeNames)if(!r.result.objectStoreNames.contains(name))r.result.createObjectStore(name,{keyPath:'id'})};
+   r.onsuccess=()=>{clearTimeout(timer);if(expired){r.result.close();return}resolve(r.result)};
+   r.onerror=()=>{clearTimeout(timer);reject(r.error)};
+   r.onblocked=()=>message('Browser storage is waiting for another open copy. Close that copy if needed.');
+  });
+  const loaded=await Promise.all(storeNames.map(readStore));
+  loaded.forEach((rows,i)=>state[storeNames[i]]=rows);
+  db.onversionchange=()=>{db.close();db=null;memoryBanner();message('Browser storage changed in another tab. This session is using memory; export before closing.')};
+ }catch(e){if(db)db.close();db=null;memoryBanner()}
+ try{await navigator.storage?.persist?.()}catch(_){}
+}
+
+let photoURLs=[],viewerURL=null;
+function clearPhotoURLs(){photoURLs.forEach(url=>URL.revokeObjectURL(url));photoURLs=[]}
+function photoURL(blob){const url=URL.createObjectURL(blob);photoURLs.push(url);return url}
+function selectSection(name){
+ currentSection=name;
+ ['jobs','photos','measure','export'].forEach(n=>$(n+'Section').hidden=n!==name);
+ all('nav [data-section]').forEach(b=>{if(b.dataset.section===name)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+}
+async function selectJob(id){
+ if(processing){message('Wait for the current photo batch to finish before switching jobs.');return}
+ if(editingMeasure)cancelMeasureEdit();
+ await write([metaChange('lastJobId',id)]);
+ currentId=id;render();selectSection('photos');message('Selected '+jobDisplay(currentJob())+'.');
+}
+function render(){
+ $('jobSummary').textContent=jobDisplay(currentJob());
+ const available=!!currentJob();
+ all('.needjob').forEach(e=>e.hidden=available);
+ all('.jobonly').forEach(e=>e.hidden=!available);
+ renderJobs();renderPhotos();renderMeasurements();renderExport();renderBackup();
+}
+function renderJobs(){
+ const list=$('jobsList');list.replaceChildren();
+ const show=$('showArchived').checked;
+ const visible=state.jobs.filter(j=>show||!j.archived);
+ if(!visible.length)list.append(node('p','Create a job to start logging photos and measurements.','empty'));
+ for(const c of state.customers.toSorted((a,b)=>displayCustomer(a).localeCompare(displayCustomer(b)))){
+  const jobs=visible.filter(j=>j.customerId===c.id&&j.kind==='customer');
+  if(!jobs.length)continue;
+  list.append(node('h3',displayCustomer(c)+(c.company?' — '+c.company:'')));
+  const tools=node('div',undefined,'row');
+  tools.append(button('Edit customer',()=>openRename('customer',c.id)),button('Archive customer jobs',()=>archiveCustomer(c.id)));
+  list.append(tools);
+  jobs.sort(compareTime).forEach(j=>list.append(jobCard(j)));
+ }
+ const projects=visible.filter(j=>j.kind==='project').sort(compareTime);
+ if(projects.length){list.append(node('h3','Projects'));projects.forEach(j=>list.append(jobCard(j)))}
+}
+function jobCard(j){
+ const card=node('div',undefined,'jobcard');
+ const pick=button(j.name+(j.archived?' (archived)':'')+(j.id===currentId?' — selected':''),()=>selectJob(j.id),'jobpick');
+ card.append(pick);
+ const tools=node('div',undefined,'row');
+ tools.append(button('Edit',()=>openRename('job',j.id)),button(j.archived?'Restore':'Archive',async()=>{
+  await write([change('jobs',{...j,archived:!j.archived})]);render();message(j.archived?'Job restored.':'Job archived. Use Show archived to find it.');
+ }));
+ card.append(tools);return card;
+}
+async function archiveCustomer(id){
+ const rows=state.jobs.filter(j=>j.kind==='customer'&&j.customerId===id&&!j.archived);
+ await write(rows.map(j=>change('jobs',{...j,archived:true})));render();message(rows.length+' jobs archived. Show archived to restore them.');
+}
+function fillCustomerSelect(){
+ const select=$('jobCustomer');select.replaceChildren();
+ select.append(new Option('Choose a customer…',''));
+ state.customers.toSorted((a,b)=>displayCustomer(a).localeCompare(displayCustomer(b))).forEach(c=>select.append(new Option(displayCustomer(c)+(c.company?' — '+c.company:''),c.id)));
+ select.append(new Option('+ New customer...','new'));
+}
+function updateJobFields(){
+ const customer=$('kindCustomer').checked,newCustomer=customer&&$('jobCustomer').value==='new';
+ $('customerFields').hidden=!customer;$('newCustomerFields').hidden=!newCustomer;
+ $('jobNameLabel').textContent=customer?'Job name':'Project name';
+ $('jobCustomer').required=customer;
+ $('customerLast').required=newCustomer;
+ $('titleMr').required=newCustomer;$('titleMs').required=newCustomer;
+}
+action($('newJobOpen'),'click',()=>{
+ $('jobForm').reset();fillCustomerSelect();updateJobFields();
+ clearErrors(['jobCustomerError','customerTitleError','customerLastError','customerDuplicateError','jobNameError']);
+ openDialog('jobDialog');
+});
+all('[name=jobKind]').forEach(e=>action(e,'change',updateJobFields));
+action($('jobCustomer'),'change',updateJobFields);
+function duplicateCustomer(prefix,lastName,company,except){
+ const key=s=>s.trim().replace(/\s+/g,' ').toLocaleLowerCase();
+ return state.customers.find(c=>c.id!==except&&c.prefix===prefix&&key(c.lastName)===key(lastName)&&key(c.company)===key(company));
+}
+action($('jobForm'),'submit',async e=>{
+ e.preventDefault();
+ clearErrors(['jobCustomerError','customerTitleError','customerLastError','customerDuplicateError','jobNameError']);
+ const kind=$('kindCustomer').checked?'customer':'project',name=$('jobName').value.trim(),changes=[];
+ let customerId=$('jobCustomer').value,valid=true;
+ if(!name){fieldError('jobNameError',kind==='customer'?'Enter a job name.':'Enter a project name.');valid=false}
+ if(kind==='customer'){
+  if(!customerId){fieldError('jobCustomerError','Choose a customer or add a new one.');valid=false}
+  if(customerId==='new'){
+   const prefix=document.querySelector('[name=customerTitle]:checked')?.value;
+   const lastName=normalizeLast($('customerLast').value),company=$('customerCompany').value.trim();
+   if(!prefix){fieldError('customerTitleError','Choose Mr. or Ms.');valid=false}
+   if(!lastName){fieldError('customerLastError','Enter a last name.');valid=false}
+   const duplicate=prefix&&lastName&&duplicateCustomer(prefix,lastName,company);
+   if(duplicate){fieldError('customerDuplicateError','This customer already exists. Pick '+displayCustomer(duplicate)+' from the Customer list.');valid=false}
+   if(prefix&&lastName&&!duplicate){
+    customerId=uid();changes.push(change('customers',{id:customerId,prefix,lastName,company,createdAt:Date.now()}));
+   }
+  }
+ }
+ if(!valid){message('Check the new job fields.');$('jobForm').querySelector('[aria-invalid=true]')?.focus();return}
+ const j={id:uid(),kind,name,createdAt:Date.now(),archived:false};
+ if(kind==='customer')j.customerId=customerId;
+ changes.push(change('jobs',j),metaChange('lastJobId',j.id));
+ await write(changes);currentId=j.id;cancelMeasureEdit();$('jobDialog').close();render();selectSection('photos');message('Job created: '+jobDisplay(j)+'.');
+});
+function openRename(kind,id){
+ renameTarget={kind,id};const c=kind==='customer'?state.customers.find(x=>x.id===id):null;
+ const j=kind==='job'?state.jobs.find(x=>x.id===id):null;
+ $('renameCustomerFields').hidden=!c;$('renameNameLabel').textContent=c?'Last name':j.kind==='project'?'Project name':'Job name';
+ $('renameName').value=c?c.lastName:j.name;$('renameCompany').value=c?.company||'';
+ if(c){$('renameMr').checked=c.prefix==='Mr.';$('renameMs').checked=c.prefix==='Ms.'}
+ fieldError('renameError','');openDialog('renameDialog');
+}
+action($('renameForm'),'submit',async e=>{
+ e.preventDefault();fieldError('renameError','');
+ const {kind,id}=renameTarget;let name=$('renameName').value.trim();
+ if(kind==='customer')name=normalizeLast(name);
+ if(!name){fieldError('renameError',kind==='customer'?'Enter a last name.':'Enter a name.');message('Enter a name.');$('renameName').focus();return}
+ if(kind==='customer'){
+  const prefix=document.querySelector('[name=renamePrefix]:checked')?.value,company=$('renameCompany').value.trim();
+  if(!prefix){fieldError('renameError','Choose Mr. or Ms.');message('Choose a title.');return}
+  if(duplicateCustomer(prefix,name,company,id)){fieldError('renameError','This customer already exists. Pick the existing customer instead.');message('Duplicate customer name.');return}
+  const c=state.customers.find(x=>x.id===id);
+  await write([change('customers',{...c,prefix,lastName:name,company})]);
+ }else{
+  const j=state.jobs.find(x=>x.id===id);await write([change('jobs',{...j,name})]);
+ }
+ $('renameDialog').close();render();message('Name saved. Future exports use the new folder name.');
+});
+
+function activeMarkup(p){return(p.markups||[]).find(m=>m.status==='active')||null}
+function renderPhotos(){
+ clearPhotoURLs();
+ const active=$('photosList'),old=$('oldPhotosList');active.replaceChildren();old.replaceChildren();
+ if(!currentJob())return;
+ const photos=state.photos.filter(p=>p.jobId===currentId).sort(compareTime);
+ if(!photos.some(p=>p.status==='active'))active.append(node('p','No photos yet. Take a photo or attach from the gallery.','empty'));
+ for(const p of photos){
+  if(p.status==='superseded'){
+   const box=node('div',undefined,'jobcard');box.append(node('p',p.label+' — '+localDate(p.takenAt)));
+   const tools=node('div',undefined,'row');
+   tools.append(button('View',()=>viewPhoto(p)),button('Restore',async()=>{
+    const fresh=state.photos.find(x=>x.id===p.id);await write([change('photos',{...fresh,status:'active',supersededAt:null,exportedAt:null})]);render();message('Photo restored.');
+   }));box.append(tools);old.append(box);
+  }else{
+   const card=node('article',undefined,'card');
+   const thumb=button('',()=>viewPhoto(p),'thumb');
+   thumb.setAttribute('aria-label','View photo: '+p.label);
+   if(p.thumb){const img=node('img');img.src=photoURL(p.thumb);img.alt=p.label;img.loading='lazy';thumb.append(img)}
+   else thumb.append(node('span','Photo preview unavailable'));
+   card.append(thumb,node('h3',p.label),node('p',localDate(p.takenAt)),node('p',bytes(p.blob.size)+' · '+p.width+' × '+p.height+' · '+p.quality,'muted'));
+   const count=state.measurements.filter(m=>m.photoId===p.id&&m.status==='active').length;
+   card.append(node('p',count+' linked measurement'+(count===1?'':'s')));
+   const mark=activeMarkup(p);
+   if(mark){card.append(node('span','Annotated','badge'));card.append(button('View annotated',()=>viewPhoto(p,mark)))}
+   const tools=node('div',undefined,'row');
+   tools.append(button('Markup',()=>openMarkup(p.id)),button('Label',()=>openLabel(p.id)),button('Delete',()=>askDelete('photos',p.id),'danger'));card.append(tools);active.append(card);
+  }
+  for(const m of(p.markups||[]).filter(x=>x.status==='superseded')){
+   const box=node('div',undefined,'jobcard');box.append(node('p',p.label+' — old markup, '+localDate(m.supersededAt||m.createdAt)));
+   const tools=node('div',undefined,'row');
+   tools.append(button('View old markup',()=>viewPhoto(p,m)),button('Restore markup',async()=>{
+    const fresh=state.photos.find(x=>x.id===p.id),now=Date.now();
+    const markups=fresh.markups.map(x=>x.id===m.id?{...x,status:'active',supersededAt:null,exportedAt:null}:x.status==='active'?{...x,status:'superseded',supersededAt:now,exportedAt:null}:x);
+    await write([change('photos',{...fresh,markups})]);render();message('Markup restored. The previous markup moved to _OLD.');
+   }));box.append(tools);old.append(box);
+  }
+ }
+ if(!old.children.length)old.append(node('p','No superseded photos or markups.'));
+}
+function openLabel(id){
+ labelPhotoId=id;const p=state.photos.find(x=>x.id===id);
+ $('photoLabel').value=p.label;fieldError('photoLabelError','');openDialog('labelDialog');
+}
+action($('labelForm'),'submit',async e=>{
+ e.preventDefault();fieldError('photoLabelError','');
+ const label=$('photoLabel').value.trim();
+ if(!label){fieldError('photoLabelError','Enter a label.');message('Enter a photo label.');$('photoLabel').focus();return}
+ const p=state.photos.find(x=>x.id===labelPhotoId);
+ const markups=p.markups.map(m=>({...m,exportedAt:null}));
+ await write([change('photos',{...p,label,exportedAt:null,markups})]);
+ $('labelDialog').close();render();message('Photo label saved.');
+});
+function viewPhoto(p,markup=null){
+ if(viewerURL)URL.revokeObjectURL(viewerURL);
+ viewerURL=URL.createObjectURL(markup?markup.blob:p.blob);
+ $('viewerTitle').textContent=p.label+(markup?' — annotated':'');
+ $('viewerImage').alt=p.label+(markup?' annotated photo':' photo');$('viewerImage').src=viewerURL;
+ openDialog('viewerDialog');
+}
+$('viewerDialog').addEventListener('close',()=>{if(viewerURL)URL.revokeObjectURL(viewerURL);viewerURL=null;$('viewerImage').removeAttribute('src')});
+$('viewerImage').addEventListener('error',()=>message('This browser cannot display this photo format. The original is kept and can still be exported.'));
+let deleteTarget=null;
+function askDelete(store,id){
+ deleteTarget={store,id};
+ const row=state[store].find(x=>x.id===id);
+ $('deleteDescription').textContent='“'+row.label+'” moves to _OLD and is never erased. You can restore it later.';
+ openDialog('deleteDialog');
+}
+$('deleteDialog').addEventListener('submit',event=>{
+ if(event.submitter?.value!=='delete')return;
+ event.preventDefault();
+ const target=deleteTarget;
+ Promise.resolve().then(async()=>{
+  const row=state[target.store].find(x=>x.id===target.id);
+  await write([change(target.store,{...row,status:'superseded',supersededAt:Date.now(),exportedAt:null})]);
+  if(target.store==='measurements'&&editingMeasure===target.id)cancelMeasureEdit();
+  $('deleteDialog').close();render();message('Moved to _OLD. Nothing was erased.');
+ }).catch(e=>message('Could not move this item: '+e.message));
+});
+
+async function decodeImage(blob){
+ if(typeof createImageBitmap==='function'){
+  try{
+   const bitmap=await createImageBitmap(blob,{imageOrientation:'from-image'});
+   return{image:bitmap,width:bitmap.width,height:bitmap.height,release:()=>bitmap.close()};
+  }catch(_){}
+ }
+ const url=URL.createObjectURL(blob);
+ try{
+  const img=await new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>reject(new Error('Image format cannot be decoded'));image.src=url});
+  return{image:img,width:img.naturalWidth,height:img.naturalHeight,release:()=>{img.src='';URL.revokeObjectURL(url)}};
+ }catch(e){URL.revokeObjectURL(url);throw e}
+}
+function canvasBlob(canvas,type,quality){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('The phone could not create an image copy')),type,quality))}
+function resizedCanvas(decoded,edge){
+ const scale=Math.min(1,edge/Math.max(decoded.width,decoded.height)),canvas=document.createElement('canvas');
+ canvas.width=Math.max(1,Math.round(decoded.width*scale));canvas.height=Math.max(1,Math.round(decoded.height*scale));
+ const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas is not available');
+ ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(decoded.image,0,0,canvas.width,canvas.height);return canvas;
+}
+async function getGPS(){
+ if(!settings().gps||!navigator.geolocation)return null;
+ return new Promise(resolve=>{try{navigator.geolocation.getCurrentPosition(p=>resolve({lat:p.coords.latitude,lon:p.coords.longitude,acc:p.coords.accuracy}),()=>resolve(null),{timeout:5000,maximumAge:60000,enableHighAccuracy:false})}catch(_){resolve(null)}});
+}
+async function ingestFiles(input){
+ const files=Array.from(input.files||[]);input.value='';if(!files.length)return;
+ if(processing){message('A photo batch is already being processed.');return}
+ const job=currentJob();if(!job){message('Create or select a job first.');return}
+ processing=true;$('cameraFile').disabled=true;$('galleryFiles').disabled=true;
+ const quality=$('photoQuality').value,added=[],warnings=[];
+ try{
+  message('Preparing '+files.length+' photo'+(files.length===1?'':'s')+'…');
+  const wantsGPS=settings().gps,gps=await getGPS();
+  if(wantsGPS&&!gps)warnings.push('GPS was unavailable; photos were saved without location.');
+  for(let i=0;i<files.length;i++){
+   message('Processing photo '+(i+1)+' of '+files.length+'…');await pause();
+   const file=files[i];let decoded=null,blob=file,thumb=null,width=0,height=0,storedQuality=quality;
+   try{
+    try{decoded=await decodeImage(file)}catch(_){storedQuality='original';warnings.push('An unsupported image was kept as the original with a text preview.')}
+    if(decoded){
+     width=decoded.width;height=decoded.height;
+     if(!width||!height)throw new Error('Image has no readable dimensions');
+     await pause();
+     if(quality==='standard'){
+      const canvas=resizedCanvas(decoded,2560);
+      try{
+       const encoded=await canvasBlob(canvas,'image/jpeg',.85);
+       const keep=/^image\/jpe?g$/i.test(file.type)&&Math.max(width,height)<=2560&&file.size<encoded.size;
+       blob=keep?file:encoded;
+       width=canvas.width;height=canvas.height;
+      }finally{canvas.width=1;canvas.height=1}
+     }
+     await pause();
+     const small=resizedCanvas(decoded,320);
+     try{thumb=await canvasBlob(small,'image/jpeg',.7)}finally{small.width=1;small.height=1}
+    }
+    const now=Date.now(),takenAt=Number.isFinite(file.lastModified)&&file.lastModified>0&&file.lastModified<=now?file.lastModified:now;
+    const p={id:uid(),jobId:job.id,label:'photo',takenAt,mime:blob.type||inferMime(file.name),blob,thumb,width,height,quality:storedQuality,gps,status:'active',supersededAt:null,exportedAt:null,markups:[]};
+    await write([change('photos',p)]);added.push(p.id);
+   }catch(e){warnings.push('Photo '+(i+1)+' was not added: '+e.message)}finally{decoded?.release()}
+   await pause();
+  }
+  render();
+  message(added.length+' of '+files.length+' photos saved'+(memory?' for this session':'')+'. '+[...new Set(warnings)].join(' '));
+  if(added.length===1&&files.length===1)openLabel(added[0]);
+ }finally{processing=false;$('cameraFile').disabled=false;$('galleryFiles').disabled=false}
+}
+function inferMime(name){
+ const ext=(name||'').split('.').pop().toLowerCase();
+ return({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',heic:'image/heic',heif:'image/heif',gif:'image/gif',avif:'image/avif'})[ext]||'application/octet-stream';
+}
+action($('cameraFile'),'change',()=>ingestFiles($('cameraFile')));
+action($('galleryFiles'),'change',()=>ingestFiles($('galleryFiles')));
+
+const EXAMPLE='Not a measurement. Examples: 12.5, 3/8, 5-6 1/2';
+function parseScalar(text){
+ const s=String(text).trim().replace(/,/g,'.').replace(/\s+/g,' ');
+ let value,display=s;
+ if(/^(?:\d+(?:\.\d+)?|\.\d+)$/.test(s)){value=Number(s)}
+ else{
+  const fraction=s.match(/^(?:(\d+) )?(\d+)\/(\d+)$/);
+  if(!fraction)throw new Error(EXAMPLE);
+  const whole=Number(fraction[1]||0),numerator=Number(fraction[2]),denominator=Number(fraction[3]);
+  if(denominator===0)throw new Error('Fraction denominator must be greater than zero.');
+  value=whole+numerator/denominator;
+ }
+ if(!Number.isFinite(value)||value<0||value>1e6)throw new Error('Use a measurement from 0 to 1,000,000.');
+ return{value,display};
+}
+function parseMeasurement(raw,unit){
+ let text=String(raw).trim().toLowerCase().replace(/[’′]/g,"'").replace(/[“”″]/g,'"').replace(/\s+/g,' ').replace(/,/g,'.');
+ if(!text)throw new Error('Enter a value.');
+ let valueMm,valueText;
+ if(unit!=='ft-in'){
+  text=text.replace(new RegExp('\\s*'+unit+'$','i'),'').trim();
+  const n=parseScalar(text),factor={in:25.4,ft:304.8,mm:1,cm:10,m:1000}[unit];
+  if(!factor)throw new Error(EXAMPLE);
+  valueMm=n.value*factor;valueText=n.display+' '+unit;
+ }else{
+  let feet=null,inches=null;
+  const marker=text.match(/^(.+?)\s*(?:ft|')\s*(.*?)$/);
+  if(marker){
+   feet=parseScalar(marker[1]);
+   const remainder=marker[2].replace(/\s*(?:in|")$/,'').trim();
+   if(remainder)inches=parseScalar(remainder);
+  }else if(/(?:in|")$/.test(text)){
+   inches=parseScalar(text.replace(/\s*(?:in|")$/,'').trim());
+  }else{
+   const split=text.match(/^(\d+(?:\.\d+)?|\.\d+)\s*-\s*(.+)$/)||text.match(/^(\d+(?:\.\d+)?|\.\d+)\s+(.+)$/);
+   if(split){feet=parseScalar(split[1]);inches=parseScalar(split[2])}
+   else feet=parseScalar(text);
+  }
+  if(feet&&inches&&inches.value>=12)throw new Error('Inches must be under 12 when feet are given.');
+  const totalFeet=(feet?.value||0)+(inches?.value||0)/12;
+  if(!Number.isFinite(totalFeet)||totalFeet>1e6)throw new Error('Use a measurement from 0 to 1,000,000 feet.');
+  valueMm=(feet?.value||0)*304.8+(inches?.value||0)*25.4;
+  valueText=[feet?feet.display+' ft':'',inches?inches.display+' in':''].filter(Boolean).join(' ');
+ }
+ return{valueText,valueMm:Math.round(valueMm*1000)/1000,unit};
+}
+function updateValueHint(){
+ const unit=$('measureUnit').value;
+ $('measureValue').placeholder=unit==='ft-in'?'5-6 1/2':'12.5 or 3/8';
+ $('measureValueHelp').textContent=unit==='ft-in'?'Feet and inches: 5-6 1/2, 5′ 6″, or 5 ft 6 in. A lone number means feet.':'Use a decimal or fraction, such as 12.5, 3/8, or 12 3/8. Selected unit: '+unit+'.';
+}
+action($('measureUnit'),'change',updateValueHint);
+function renderMeasurements(){
+ const photoSelect=$('measurePhoto'),oldSelected=photoSelect.value;
+ photoSelect.replaceChildren(new Option('None',''));
+ state.photos.filter(p=>p.jobId===currentId&&p.status==='active').sort(compareTime).forEach(p=>photoSelect.append(new Option(p.label+' — '+localDate(p.takenAt),p.id)));
+ if(oldSelected&&state.photos.some(p=>p.id===oldSelected&&p.jobId===currentId)){
+  if(!Array.from(photoSelect.options).some(o=>o.value===oldSelected)){
+   const p=state.photos.find(p=>p.id===oldSelected);photoSelect.append(new Option(p.label+' (_OLD)',p.id));
+  }
+  photoSelect.value=oldSelected;
+ }
+ const rows=$('measureRows'),old=$('oldMeasureList');rows.replaceChildren();old.replaceChildren();
+ const measurements=state.measurements.filter(m=>m.jobId===currentId).sort(compareTime);
+ $('measureEmpty').hidden=measurements.some(m=>m.status==='active');
+ for(const m of measurements){
+  if(m.status==='superseded'){
+   const box=node('div',undefined,'jobcard');box.append(node('p',m.label+' — '+m.valueText),node('p',localDate(m.createdAt),'muted'));
+   if(m.note)box.append(node('p',m.note));
+   box.append(button('Restore',async()=>{
+    const fresh=state.measurements.find(x=>x.id===m.id);
+    await write([change('measurements',{...fresh,status:'active',supersededAt:null,supersededBy:null,exportedAt:null})]);render();message('Measurement restored. Any replacement is kept separately.');
+   }));old.append(box);continue;
+  }
+  const tr=node('tr'),label=node('td');label.append(node('strong',m.label));
+  if(m.note)label.append(node('p',m.note,'muted'));
+  const p=state.photos.find(p=>p.id===m.photoId);
+  if(p){const para=node('p');para.append(button('Photo: '+p.label+(p.status==='superseded'?' (_OLD)':''),()=>viewPhoto(p)));label.append(para)}
+  const value=node('td',m.valueText),actions=node('td');
+  actions.append(button('Edit',()=>editMeasurement(m.id)),button('Delete',()=>askDelete('measurements',m.id),'danger'));
+  tr.append(label,value,actions);rows.append(tr);
+ }
+ if(!old.children.length)old.append(node('p','No superseded measurements.'));
+}
+function cancelMeasureEdit(){
+ editingMeasure=null;$('editMeasureBanner').hidden=true;$('measureSave').textContent='Save measurement';
+ $('measureValue').value='';$('measureNote').value='';clearErrors(['measureLabelError','measureValueError']);
+}
+function editMeasurement(id){
+ const m=state.measurements.find(x=>x.id===id);editingMeasure=id;
+ $('measureLabel').value=m.label;$('measureUnit').value=m.unit;
+ $('measureValue').value=m.unit==='ft-in'?m.valueText:m.valueText.replace(new RegExp('\\s*'+m.unit+'$'),'');
+ $('measureNote').value=m.note;renderMeasurements();$('measurePhoto').value=m.photoId||'';
+ $('editMeasureBanner').hidden=false;$('measureSave').textContent='Save replacement';
+ clearErrors(['measureLabelError','measureValueError']);updateValueHint();selectSection('measure');$('measureLabel').focus();$('measureForm').scrollIntoView({block:'start'});
+}
+action($('cancelMeasureEdit'),'click',()=>{cancelMeasureEdit();message('Edit cancelled.');$('measureLabel').focus()});
+action($('measureForm'),'submit',async e=>{
+ e.preventDefault();if(measureBusy)return;
+ const job=currentJob();if(!job){message('Select a job first.');return}
+ clearErrors(['measureLabelError','measureValueError']);
+ const label=$('measureLabel').value.trim(),note=$('measureNote').value.trim(),photoId=$('measurePhoto').value||null;
+ let parsed,valid=true;
+ if(!label){fieldError('measureLabelError','Enter a label.');valid=false}
+ try{parsed=parseMeasurement($('measureValue').value,$('measureUnit').value)}catch(error){fieldError('measureValueError',error.message);valid=false}
+ if(!valid){message('Measurement not saved. Check the highlighted fields.');$(label?'measureValue':'measureLabel').focus();return}
+ const oldId=editingMeasure;
+ measureBusy=true;$('measureSave').disabled=true;
+ try{
+  const wantsGPS=settings().gps,gps=await getGPS(),now=Date.now();
+  const m={id:uid(),jobId:job.id,photoId,label,...parsed,note,createdAt:now,gps,status:'active',supersededAt:null,supersededBy:null,exportedAt:null};
+  const changes=[change('measurements',m)];
+  if(oldId){
+   const old=state.measurements.find(x=>x.id===oldId);
+   if(old)changes.push(change('measurements',{...old,status:'superseded',supersededAt:now,supersededBy:m.id,exportedAt:null}));
+  }
+  await write(changes);
+  cancelMeasureEdit();render();
+  message('Measurement saved'+(memory?' for this session':'')+'.'+(wantsGPS&&!gps?' GPS was unavailable; saved without location.':''));
+  $('measureLabel').focus();
+ }finally{measureBusy=false;$('measureSave').disabled=false}
+});
+
+let markupSession=null,drawDraft=null,drawPointer=null,textPoint=null,markupHistory=[];
+const markupCanvas=$('markupCanvas');
+function cloneShapes(shapes){return structuredClone(shapes)}
+async function openMarkup(id){
+ if(markupBusy)return;
+ const p=state.photos.find(x=>x.id===id);
+ message('Opening full photo for markup…');
+ let decoded;
+ try{decoded=await decodeImage(p.blob)}catch(_){message('This browser cannot decode this photo for markup. The original can still be exported.');return}
+ if(markupSession)markupSession.decoded.release();
+ markupSession={id,decoded,shapes:cloneShapes(activeMarkup(p)?.shapes||[])};
+ markupHistory=[];drawDraft=null;drawPointer=null;
+ $('markupTitle').textContent='Markup: '+p.label;
+ $('markupInfo').textContent='Draw on the photo; the original is kept. '+decoded.width+' × '+decoded.height+' pixels.';
+ openDialog('markupDialog');sizeMarkupCanvas();message('Markup ready. Choose a tool and draw on the photo.');
+}
+function sizeMarkupCanvas(){
+ if(!markupSession||!$('markupDialog').open)return;
+ const {width,height}=markupSession.decoded;
+ const cssWidth=Math.max(1,markupCanvas.getBoundingClientRect().width);
+ const ratio=Math.min(2,window.devicePixelRatio||1),edge=Math.min(width,1600,cssWidth*ratio);
+ markupCanvas.width=Math.max(1,Math.round(edge));markupCanvas.height=Math.max(1,Math.round(edge*height/width));renderMarkup();
+}
+function drawShape(ctx,s){
+ ctx.save();ctx.strokeStyle=s.color;ctx.fillStyle=s.color;ctx.lineWidth=s.width;ctx.lineCap='round';ctx.lineJoin='round';
+ if(s.type==='text'){
+  ctx.font='bold '+s.size+'px sans-serif';ctx.textBaseline='top';
+  ctx.strokeStyle=s.color==='#000000'?'#fff':'#000';ctx.lineWidth=Math.max(2,s.size*.09);ctx.strokeText(s.text,s.x,s.y);ctx.fillText(s.text,s.x,s.y);
+ }else if(s.type==='freehand'){
+  const points=s.points||[];
+  if(points.length===1){ctx.beginPath();ctx.arc(points[0].x,points[0].y,s.width/2,0,Math.PI*2);ctx.fill()}
+  else if(points.length){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke()}
+ }else{
+  ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+  if(s.type==='arrow'){
+   const angle=Math.atan2(s.y2-s.y1,s.x2-s.x1),length=s.width*5;
+   ctx.beginPath();ctx.moveTo(s.x2-length*Math.cos(angle-.5),s.y2-length*Math.sin(angle-.5));ctx.lineTo(s.x2,s.y2);ctx.lineTo(s.x2-length*Math.cos(angle+.5),s.y2-length*Math.sin(angle+.5));ctx.stroke();
+  }
+ }
+ ctx.restore();
+}
+function paintMarkup(canvas,includeDraft){
+ const session=markupSession,ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas is unavailable');
+ const {width,height,image}=session.decoded;
+ ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.setTransform(canvas.width/width,0,0,canvas.height/height,0,0);ctx.drawImage(image,0,0,width,height);
+ session.shapes.forEach(s=>drawShape(ctx,s));if(includeDraft&&drawDraft)drawShape(ctx,drawDraft);
+ ctx.setTransform(1,0,0,1,0,0);
+}
+function renderMarkup(){if(markupSession)paintMarkup(markupCanvas,true)}
+function canvasPoint(event){
+ const rect=markupCanvas.getBoundingClientRect(),{width,height}=markupSession.decoded;
+ return{x:Math.max(0,Math.min(width,(event.clientX-rect.left)/rect.width*width)),y:Math.max(0,Math.min(height,(event.clientY-rect.top)/rect.height*height))};
+}
+function saveMarkupHistory(){markupHistory.push(cloneShapes(markupSession.shapes));if(markupHistory.length>30)markupHistory.shift()}
+action(markupCanvas,'pointerdown',event=>{
+ if(!markupSession||markupBusy||drawPointer!==null)return;
+ if(event.pointerType==='mouse'&&event.button!==0)return;
+ const point=canvasPoint(event),type=document.querySelector('[name=tool]:checked').value,color=document.querySelector('[name=ink]:checked').value;
+ const width=Math.max(1,Math.max(markupSession.decoded.width,markupSession.decoded.height)*Number($('strokeWidth').value));
+ if(type==='text'){
+  textPoint={...point,color,width,size:Math.max(20,Math.max(markupSession.decoded.width,markupSession.decoded.height)*.035)};
+  $('markupText').value='';fieldError('markupTextError','');openDialog('textDialog');return;
+ }
+ drawPointer=event.pointerId;markupCanvas.setPointerCapture(event.pointerId);
+ drawDraft=type==='freehand'?{type,color,width,points:[point]}:{type,color,width,x1:point.x,y1:point.y,x2:point.x,y2:point.y};renderMarkup();
+});
+let renderRequested=false;
+action(markupCanvas,'pointermove',event=>{
+ if(!markupSession||drawPointer!==event.pointerId||!drawDraft)return;
+ const point=canvasPoint(event);
+ if(drawDraft.type==='freehand'){
+  const prev=drawDraft.points[drawDraft.points.length-1];
+  if(Math.hypot(point.x-prev.x,point.y-prev.y)<drawDraft.width*.12)return;
+  drawDraft.points.push(point);
+ }else{drawDraft.x2=point.x;drawDraft.y2=point.y}
+ if(!renderRequested){renderRequested=true;requestAnimationFrame(()=>{renderRequested=false;if(markupSession)renderMarkup()})}
+});
+action(markupCanvas,'pointerup',event=>{
+ if(drawPointer!==event.pointerId||!drawDraft)return;
+ const point=canvasPoint(event);
+ if(drawDraft.type!=='freehand'){drawDraft.x2=point.x;drawDraft.y2=point.y}
+ saveMarkupHistory();markupSession.shapes.push(drawDraft);drawDraft=null;drawPointer=null;renderMarkup();
+});
+action(markupCanvas,'pointercancel',()=>{drawDraft=null;drawPointer=null;renderMarkup()});
+action($('textForm'),'submit',event=>{
+ event.preventDefault();fieldError('markupTextError','');
+ const text=$('markupText').value.trim();
+ if(!text){fieldError('markupTextError','Enter text.');message('Enter markup text.');return}
+ if(!markupSession||!textPoint)return;
+ saveMarkupHistory();markupSession.shapes.push({type:'text',text,...textPoint});
+ $('textDialog').close();textPoint=null;renderMarkup();message('Text added to markup.');
+});
+action($('markupUndo'),'click',()=>{
+ if(!markupSession||markupBusy)return;
+ if(markupHistory.length)markupSession.shapes=markupHistory.pop();
+ else if(markupSession.shapes.length)markupSession.shapes.pop();
+ renderMarkup();
+});
+action($('markupClear'),'click',()=>{
+ if(!markupSession||markupBusy)return;saveMarkupHistory();markupSession.shapes=[];drawDraft=null;renderMarkup();message('Drawing cleared. Undo restores it until this editor closes.');
+});
+action($('markupSave'),'click',async()=>{
+ if(!markupSession||markupBusy)return;
+ markupBusy=true;$('markupSave').disabled=true;
+ const session=markupSession;
+ try{
+  message('Saving full resolution markup…');await pause();
+  const canvas=document.createElement('canvas');canvas.width=session.decoded.width;canvas.height=session.decoded.height;
+  let blob;
+  try{paintMarkup(canvas,false);await pause();blob=await canvasBlob(canvas,'image/jpeg',.9)}finally{canvas.width=1;canvas.height=1}
+  const p=state.photos.find(x=>x.id===session.id),now=Date.now(),hadPrev=p.markups.some(m=>m.status==='active');
+  const markups=p.markups.map(m=>m.status==='active'?{...m,status:'superseded',supersededAt:now,exportedAt:null}:m);
+  markups.push({id:uid(),blob,shapes:cloneShapes(session.shapes),createdAt:now,status:'active',supersededAt:null,exportedAt:null});
+  await write([change('photos',{...p,markups})]);$('markupDialog').close();render();message(hadPrev?'Markup saved. Original kept; previous markup moved to _OLD.':'Markup saved. Original kept.');
+ }finally{markupBusy=false;$('markupSave').disabled=false}
+});
+$('markupDialog').addEventListener('cancel',event=>{if(markupBusy){event.preventDefault();message('Finishing markup save. Please wait.')}});
+$('markupDialog').addEventListener('close',()=>{
+ if(markupSession)markupSession.decoded.release();
+ markupSession=null;drawDraft=null;drawPointer=null;textPoint=null;markupHistory=[];markupCanvas.width=1;markupCanvas.height=1;
+});
+action(window,'resize',sizeMarkupCanvas);
+
+async function storageInfo(){
+ const parts=[];
+ if(memory)parts.push('Session memory only. Saving is unavailable in this browser mode.');
+ try{const estimate=await navigator.storage?.estimate?.();if(estimate)parts.push('Using '+bytes(estimate.usage||0)+(estimate.quota?' of approximately '+bytes(estimate.quota):'')+'.')}catch(_){}
+ try{const persisted=await navigator.storage?.persisted?.();if(typeof persisted==='boolean')parts.push('Persistent storage: '+(persisted?'granted.':'not granted. Export regularly.'))}catch(_){}
+ $('storageInfo').textContent=parts.join(' ')||'Storage usage and persistence estimates are unavailable here.';
+}
+action($('settingsOpen'),'click',async()=>{
+ const s=settings();$('settingsQuality').value=s.quality;$('settingsGps').checked=s.gps;$('settingsUnit').value=s.defaultUnit;
+ openDialog('settingsDialog');await storageInfo();
+});
+action($('settingsForm'),'submit',async e=>{
+ e.preventDefault();const s={quality:$('settingsQuality').value,gps:$('settingsGps').checked,defaultUnit:$('settingsUnit').value};
+ await write([metaChange('settings',s)]);$('photoQuality').value=s.quality;
+ if(!editingMeasure){$('measureUnit').value=s.defaultUnit;updateValueHint()}
+ message('Settings saved.');$('settingsDialog').close();
+});
+action($('requestPersist'),'click',async()=>{
+ let granted=false;try{granted=await navigator.storage?.persist?.()}catch(_){}
+ await storageInfo();message(granted?'Persistent storage granted. Keep exporting backups.':'Persistent storage was not granted here. Export regularly.');
+});
+function renderBackup(){
+ const cutoff=Date.now()-86400000;
+ let n=state.photos.filter(p=>p.exportedAt==null&&p.takenAt<cutoff).length+
+ state.measurements.filter(m=>m.exportedAt==null&&m.createdAt<cutoff).length;
+ for(const p of state.photos)n+=p.markups.filter(m=>m.exportedAt==null&&m.createdAt<cutoff).length;
+ $('backupBanner').hidden=!n;$('backupBanner').textContent=n+' items not exported yet - export so they are backed up in OneDrive';
+}
+function renderExport(){
+ const p=state.photos.filter(p=>p.jobId===currentId),m=state.measurements.filter(m=>m.jobId===currentId),marks=p.flatMap(p=>p.markups);
+ const fresh=p.filter(p=>p.exportedAt==null).length+m.filter(m=>m.exportedAt==null).length+marks.filter(m=>m.exportedAt==null).length;
+ $('exportSummary').textContent=currentJob()?jobDisplay(currentJob())+': '+p.length+' photos, '+marks.length+' markups, '+m.length+' measurements (includes _OLD). '+fresh+' new or changed since export.':'Select a job, or use an All jobs scope.';
+ const last=getMeta('lastExportAt',null);$('lastExport').textContent=last?'Last successful export: '+localDate(last):'No exports yet.';
+}
+function extension(mime){
+ const type=(mime||'').toLowerCase().split(';')[0];
+ return({'image/jpeg':'jpg','image/jpg':'jpg','image/png':'png','image/webp':'webp','image/heic':'heic','image/heif':'heic','image/avif':'avif','image/gif':'gif','image/bmp':'bmp','image/tiff':'tif','image/svg+xml':'svg'})[type]||'bin';
+}
+function folderFor(job){
+ return job.kind==='customer'?'Proposal/'+safeName(displayCustomer(customerFor(job)))+'/'+safeName(job.name):'Misc Projects/'+safeName(job.name);
+}
+function gpsJSON(gps){return gps?{lat:gps.lat,lon:gps.lon,accuracy_m:gps.acc}:null}
+function uniqueName(proposed,used){
+ let name=proposed,i=2;const dot=proposed.lastIndexOf('.'),base=dot<0?proposed:proposed.slice(0,dot),ext=dot<0?'':proposed.slice(dot);
+ while(used.has(name.toLocaleLowerCase()))name=base+'-'+i+++ext;
+ used.add(name.toLocaleLowerCase());return name;
+}
+function makePhotoNames(photos){
+ const names=new Map(),markNames=new Map(),used=new Set();
+ for(const p of photos.toSorted(compareTime)){
+  const original=stamp(p.takenAt)+'_'+slug(p.label),ext=extension(p.mime),directory=p.status==='superseded'?'_OLD/':'';
+  let base=original,counter=1;
+  const oldMarks=p.markups.filter(m=>m.status==='superseded').toSorted((a,b)=>(a.supersededAt||a.createdAt)-(b.supersededAt||b.createdAt)||a.id.localeCompare(b.id));
+  function proposed(b){
+   const list=[directory+b+'.'+ext];
+   if(activeMarkup(p))list.push(directory+b+'_markup.jpg');
+   oldMarks.forEach(m=>list.push('_OLD/'+b+'_markup_'+stamp(m.supersededAt||m.createdAt)+'.jpg'));
+   return list;
+  }
+  while(proposed(base).some(name=>used.has(name.toLocaleLowerCase())))base=original+'-'+(++counter);
+  const filename=directory+base+'.'+ext;used.add(filename.toLocaleLowerCase());names.set(p.id,filename);
+  const active=activeMarkup(p);
+  if(active)markNames.set(active.id,uniqueName(directory+base+'_markup.jpg',used));
+  oldMarks.forEach(m=>markNames.set(m.id,uniqueName('_OLD/'+base+'_markup_'+stamp(m.supersededAt||m.createdAt)+'.jpg',used)));
+ }
+ return{names,markNames};
+}
+function csvCell(value){
+ let text;
+ if(typeof value==='number')text=String(value);
+ else{text=String(value??'');if(/^\s*[=+@]/.test(text))text="'"+text}
+ return /[",\r\n]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text;
+}
+function csvFile(rows){return new Blob([rows.map(row=>row.map(csvCell).join(',')).join('\r\n')+'\r\n'],{type:'text/csv;charset=utf-8'})}
+const CSV_HEADERS=['job_type','customer','company','job_or_project','measured_at','label','value','unit','value_mm','note','photo_file','markup_file','gps_lat','gps_lon','status','id'];
+function measurementStamp(m){return[m.label,m.valueText,m.note,m.status,m.supersededAt,m.supersededBy,m.photoId].join('\u0001')}
+function photoStamp(p){return[p.label,p.status,p.supersededAt,p.blob.size,p.mime].join('\u0001')}
+async function prepareExport(){
+ if(processing||measureBusy||markupBusy)throw new Error('Wait for the current save or photo batch to finish');
+ const scope=$('exportScope').value,newOnly=scope.endsWith('new'),everyJob=scope.startsWith('all');
+ if(!everyJob&&!currentJob())throw new Error('Select a job first, or choose All jobs');
+ const timestamp=Date.now(),counter=getMeta('exportCounter',0)+1;
+ const reserved=getMeta('exportReservations',{}),reservations={...reserved};
+ const included=[],files=[],roots=new Map(),globalPaths=new Set(),snapshotRefs={photos:[],markups:[],measurements:[]};
+ const candidates=(everyJob?state.jobs:[currentJob()]).toSorted(compareTime);
+ for(const job of candidates){
+  const photos=state.photos.filter(p=>p.jobId===job.id).toSorted(compareTime);
+  const measurements=state.measurements.filter(m=>m.jobId===job.id).toSorted(compareTime);
+  const selectedPhotos=photos.filter(p=>!newOnly||p.exportedAt==null);
+  const selectedMarks=photos.flatMap(p=>p.markups.filter(m=>!newOnly||m.exportedAt==null).map(m=>({photo:p,markup:m})));
+  const selectedMeasures=measurements.filter(m=>!newOnly||m.exportedAt==null);
+  if(!selectedPhotos.length&&!selectedMarks.length&&!selectedMeasures.length)continue;
+  const folder=folderFor(job),root=folder+'/Site Photos/',customer=customerFor(job);
+  if(!roots.has(root))roots.set(root,[]);
+  const {names,markNames}=makePhotoNames(photos);
+  function add(relative,blob){
+   const full=root+relative;
+   if(globalPaths.has(full.toLocaleLowerCase()))throw new Error('Two job folders produce the same file path. Rename one job or customer, or export those jobs separately');
+   globalPaths.add(full.toLocaleLowerCase());files.push({name:full,blob,jobId:job.id,folder,job,relative});roots.get(root).push(relative);
+  }
+  for(const p of selectedPhotos){
+   add(names.get(p.id),p.blob);snapshotRefs.photos.push({id:p.id,signature:photoStamp(p)});
+  }
+  for(const {photo,markup} of selectedMarks){
+   add(markNames.get(markup.id),markup.blob);
+   snapshotRefs.markups.push({photoId:photo.id,id:markup.id,status:markup.status,supersededAt:markup.supersededAt||null});
+  }
+  const csv=[CSV_HEADERS];
+  for(const m of selectedMeasures){
+   const p=photos.find(p=>p.id===m.photoId),mark=p&&activeMarkup(p),gps=m.gps||p?.gps;
+   csv.push([job.kind,customer?displayCustomer(customer):'',customer?.company||'',job.name,localISO(m.createdAt),m.label,m.valueText,m.unit,m.valueMm,m.note,p?names.get(p.id):'',mark?markNames.get(mark.id):'',gps?.lat??'',gps?.lon??'',m.status,m.id]);
+   snapshotRefs.measurements.push({id:m.id,signature:measurementStamp(m)});
+  }
+  const photoMetadata=photos.filter(p=>selectedPhotos.some(x=>x.id===p.id)||selectedMarks.some(x=>x.photo.id===p.id));
+  const json={
+   schema:'site-photo-logger/1',exported_at:localISO(timestamp),app:'Site Photo Logger v1',
+   job:{type:job.kind,customer:customer?{prefix:customer.prefix,last_name:customer.lastName,display:displayCustomer(customer),company:customer.company}:null,name:job.name,folder,onedrive_desktop_path:folder.replace(/\//g,'\\')},
+   photos:photoMetadata.map(p=>({file:names.get(p.id),markup_file:activeMarkup(p)?markNames.get(activeMarkup(p).id):null,label:p.label,taken_at:localISO(p.takenAt),width:p.width,height:p.height,quality:p.quality,gps:gpsJSON(p.gps),status:p.status,bytes:p.blob.size})),
+   measurements:selectedMeasures.map(m=>{const p=photos.find(p=>p.id===m.photoId);return{id:m.id,label:m.label,value:m.valueText,unit:m.unit,value_mm:m.valueMm,note:m.note,photo_file:p?names.get(p.id):null,measured_at:localISO(m.createdAt),gps:gpsJSON(m.gps||p?.gps),status:m.status,superseded_by:m.supersededBy||null}})
+  };
+  const key=(root+'measurements_'+stamp(timestamp)).toLocaleLowerCase(),sequence=(reservations[key]||0)+1;
+  reservations[key]=sequence;
+  const snapshotName='measurements_'+stamp(timestamp)+(sequence>1?'-'+sequence:'');
+  add(snapshotName+'.csv',csvFile(csv));
+  add(snapshotName+'.json',new Blob([JSON.stringify(json,null,2)],{type:'application/json;charset=utf-8'}));
+  included.push(job.id);
+  await pause();
+ }
+ if(!files.length)return null;
+ const zipKey='zip_'+stamp(timestamp,true),zipSequence=(reservations[zipKey]||0)+1;reservations[zipKey]=zipSequence;
+ const zipName='SitePhotoExport_'+stamp(timestamp,true)+(zipSequence>1?'-'+zipSequence:'')+'.zip';
+ return{files,roots,refs:snapshotRefs,timestamp,counter,reservations,zipName,jobIds:included};
+}
+
+const CRC_TABLE=(()=>{
+ const table=new Uint32Array(256);
+ for(let i=0;i<256;i++){let c=i;for(let j=0;j<8;j++)c=(c&1)?0xedb88320^(c>>>1):c>>>1;table[i]=c>>>0}
+ return table;
+})();
+async function crcBlob(blob){
+ const buffer=await blob.arrayBuffer(),data=new Uint8Array(buffer);let crc=0xffffffff;
+ const step=524288;
+ for(let start=0;start<data.length;start+=step){
+  const end=Math.min(start+step,data.length);
+  for(let i=start;i<end;i++)crc=CRC_TABLE[(crc^data[i])&255]^(crc>>>8);
+  if(end<data.length)await pause();
+ }
+ return(crc^0xffffffff)>>>0;
+}
+function zipDate(time){
+ const d=new Date(time),year=Math.max(1980,Math.min(2107,d.getFullYear()));
+ return{date:((year-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate(),time:(d.getHours()<<11)|(d.getMinutes()<<5)|Math.floor(d.getSeconds()/2)};
+}
+async function buildZip(files,exportTime){
+ if(files.length>60000)throw new Error('ZIP limit reached. Export fewer items (maximum 60,000 files)');
+ const encoder=new TextEncoder(),parts=[],central=[],entries=[],dos=zipDate(exportTime),limit=3.5*1024*1024*1024;
+ let offset=0,centralSize=0;
+ const names=files.map(f=>encoder.encode(f.name));
+ let total=22;
+ files.forEach((f,i)=>{if(names[i].length>65535)throw new Error('A ZIP path is too long');total+=30+46+names[i].length*2+f.blob.size});
+ if(total>limit)throw new Error('ZIP is over 3.5 GB. Export fewer items, such as only new records or one job');
+ for(let i=0;i<files.length;i++){
+  const file=files[i],name=names[i],size=file.blob.size;
+  message('Building ZIP: file '+(i+1)+' of '+files.length+'…');await pause();
+  const crc=await crcBlob(file.blob);
+  const local=new Uint8Array(30+name.length),lv=new DataView(local.buffer);
+  lv.setUint32(0,0x04034b50,true);lv.setUint16(4,20,true);lv.setUint16(6,0x0800,true);lv.setUint16(8,0,true);
+  lv.setUint16(10,dos.time,true);lv.setUint16(12,dos.date,true);lv.setUint32(14,crc,true);
+  lv.setUint32(18,size,true);lv.setUint32(22,size,true);lv.setUint16(26,name.length,true);lv.setUint16(28,0,true);local.set(name,30);
+  const record=new Uint8Array(46+name.length),cv=new DataView(record.buffer);
+  cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(8,0x0800,true);cv.setUint16(10,0,true);
+  cv.setUint16(12,dos.time,true);cv.setUint16(14,dos.date,true);cv.setUint32(16,crc,true);cv.setUint32(20,size,true);cv.setUint32(24,size,true);
+  cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);record.set(name,46);
+  parts.push(local,file.blob);central.push(record);entries.push({name:file.name,size});
+  offset+=local.length+size;centralSize+=record.length;
+ }
+ const end=new Uint8Array(22),view=new DataView(end.buffer);
+ view.setUint32(0,0x06054b50,true);view.setUint16(8,files.length,true);view.setUint16(10,files.length,true);
+ view.setUint32(12,centralSize,true);view.setUint32(16,offset,true);
+ return{blob:new Blob([...parts,...central,end],{type:'application/zip'}),entries};
+}
+async function markExported(pack){
+ const now=Date.now(),changes=[],photoChanges=new Map();
+ for(const ref of pack.refs.photos){
+  const p=state.photos.find(x=>x.id===ref.id);
+  if(p&&photoStamp(p)===ref.signature)photoChanges.set(p.id,{...p,exportedAt:now});
+ }
+ for(const ref of pack.refs.markups){
+  const p=photoChanges.get(ref.photoId)||state.photos.find(x=>x.id===ref.photoId);
+  if(!p)continue;
+  const markups=p.markups.map(m=>m.id===ref.id&&m.status===ref.status&&(m.supersededAt||null)===ref.supersededAt?{...m,exportedAt:now}:m);
+  photoChanges.set(p.id,{...p,markups});
+ }
+ photoChanges.forEach(p=>changes.push(change('photos',p)));
+ for(const ref of pack.refs.measurements){
+  const m=state.measurements.find(x=>x.id===ref.id);
+  if(m&&measurementStamp(m)===ref.signature)changes.push(change('measurements',{...m,exportedAt:now}));
+ }
+ changes.push(metaChange('lastExportAt',now),metaChange('exportCounter',getMeta('exportCounter',0)+1),metaChange('exportReservations',pack.reservations));
+ await write(changes);renderExport();renderBackup();
+}
+function treeText(pack){
+ let text='';
+ for(const [root,names] of pack.roots){
+  text+=root+'\n';
+  names.forEach(name=>text+='    '+name+'\n');
+ }
+ return text;
+}
+function resultDialog(pack,name,size,shared=false,loose=false,trackingFailed=false){
+ $('exportResultTitle').textContent='Export result';
+ $('exportResultMessage').textContent=(shared?'Files handed to the share destination. Check that OneDrive finished uploading.':'Download requested. Check Chrome Downloads for the ZIP.')+(trackingFailed?' Export tracking could not be saved; records remain marked as new.':'');
+ $('exportResultName').textContent=name+' — '+bytes(size);
+ $('exportResultCounts').textContent=pack.jobIds.length+' jobs; '+pack.refs.photos.length+' photos; '+pack.refs.markups.length+' markups; '+pack.refs.measurements.length+' measurements; '+pack.files.length+' files.'+(loose?' Shared loose files have prefixed flat names; the tree shows their intended destination.':'');
+ $('exportTree').textContent=treeText(pack);openDialog('exportDialog');
+}
+let shareAvailable=false;
+function checkShare(){
+ try{shareAvailable=typeof File==='function'&&typeof navigator.share==='function'&&typeof navigator.canShare==='function'&&navigator.canShare({files:[new File(['test'],'SitePhotoExport_test.zip',{type:'application/zip'})]})}catch(_){shareAvailable=false}
+ $('shareZip').hidden=!shareAvailable;$('shareReason').hidden=shareAvailable;$('shareLoose').disabled=!shareAvailable;
+}
+function setExportBusy(busy){
+ exportBusy=busy;$('downloadZip').disabled=busy;$('shareZip').disabled=busy;$('shareLoose').disabled=busy||!shareAvailable;$('exportScope').disabled=busy;
+}
+function downloadBlob(blob,name){
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+async function runExport(mode){
+ if(exportBusy)return;
+ setExportBusy(true);
+ try{
+  message('Preparing export…');await pause();
+  const pack=await prepareExport();
+  if(!pack){message('Nothing is in this export scope. All selected records have already been exported, or there are no records yet.');return}
+  let blob=null,name=pack.zipName,totalSize,looseFiles=null;
+  if(mode==='loose'){
+   const used=new Set();looseFiles=pack.files.map(f=>{
+    const c=customerFor(f.job),prefix=slug(c?displayCustomer(c):'Project')+'_'+slug(f.job.name);
+    const flat=uniqueName(prefix+'_'+f.relative.replace(/\//g,'_'),used);
+    return new File([f.blob],flat,{type:f.blob.type||'application/octet-stream',lastModified:pack.timestamp});
+   });
+   totalSize=looseFiles.reduce((n,f)=>n+f.size,0);name='Loose file share';
+   if(!navigator.canShare?.({files:looseFiles})){message('This phone cannot share this set of loose files. Use Download ZIP, or select fewer items.');return}
+   await navigator.share({files:looseFiles,title:'Site Photo Logger export'});
+  }else{
+   const built=await buildZip(pack.files,pack.timestamp);blob=built.blob;totalSize=blob.size;
+   if(mode==='download')downloadBlob(blob,name);
+   else{
+    const file=new File([blob],name,{type:'application/zip',lastModified:pack.timestamp});
+    if(!navigator.canShare?.({files:[file]})){message('This ZIP cannot be shared here. Use Download ZIP.');return}
+    await navigator.share({files:[file],title:'Site Photo Logger export'});
+   }
+  }
+  let trackingFailed=false;
+  try{await markExported(pack)}catch(error){trackingFailed=true;console.error(error)}
+  message((mode==='download'?'ZIP download requested.':'Export shared. Check the destination for the files.')+(trackingFailed?' Export tracking could not be saved; records stay marked as new.':' Export complete.'));
+  resultDialog(pack,name,totalSize,mode!=='download',mode==='loose',trackingFailed);
+ }catch(error){
+  if(error.name==='AbortError'){message('Share cancelled. Records remain available for export.');return}
+  message('Export could not finish: '+error.message+(mode!=='download'?'. Use Download ZIP.':'. Try exporting fewer items if the phone is low on memory.'));
+ }finally{setExportBusy(false)}
+}
+action($('downloadZip'),'click',()=>runExport('download'));
+action($('shareZip'),'click',()=>runExport('share'));
+action($('shareLoose'),'click',()=>runExport('loose'));
+
+all('nav [data-section]').forEach(b=>action(b,'click',()=>{selectSection(b.dataset.section);if(b.dataset.section==='export')renderExport()}));
+action($('jobSummary'),'click',()=>selectSection('jobs'));
+action($('showArchived'),'change',renderJobs);
+$('photoForm').addEventListener('submit',e=>e.preventDefault());
+$('exportForm').addEventListener('submit',e=>e.preventDefault());
+
+function installLocalMetadata(){
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="32" fill="#004477"/><path d="M35 64h122v85H35zM61 49h34v15H61z" fill="white"/><circle cx="96" cy="106" r="28" fill="#004477"/><path d="M42 161h108" stroke="white" stroke-width="8"/></svg>';
+ const icon='data:image/svg+xml,'+encodeURIComponent(svg);
+ $('favicon').href=icon;
+ const manifest={name:'Site Photo Logger',short_name:'Site Photos',display:'standalone',start_url:'.',theme_color:'#004477',background_color:'#ffffff',icons:[{src:icon,sizes:'any',type:'image/svg+xml',purpose:'any'}]};
+ $('manifest').href='data:application/manifest+json,'+encodeURIComponent(JSON.stringify(manifest));
+ if((location.protocol==='https:'||['localhost','127.0.0.1','[::1]'].includes(location.hostname))&&'serviceWorker'in navigator){
+  $('manifest').href='manifest.webmanifest';
+  try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(_){}
+ }
+}
+(async()=>{
+ try{
+  installLocalMetadata();await initStorage();
+  const last=getMeta('lastJobId',null);currentId=state.jobs.some(j=>j.id===last)?last:null;
+  const s=settings();$('photoQuality').value=s.quality;$('measureUnit').value=s.defaultUnit;
+  updateValueHint();checkShare();render();
+  message(memory?'Ready for this session. Saving is unavailable - export before closing.':currentJob()?'Ready: '+jobDisplay(currentJob())+'.':'Ready. Create or select a job.');
+ }catch(error){memoryBanner();render();message('Ready in session memory. Export before closing. '+error.message)}
+})();
+</script>
+</body>
+</html>
